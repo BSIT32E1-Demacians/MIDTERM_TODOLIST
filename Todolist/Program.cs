@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Todo.Repositories.Repositories;
 using Todo.Service;
 using Todolist.Models;
 using Todolist.Repositories;
@@ -17,6 +18,7 @@ namespace Todo_List
 
             //Add EF Core Di
             builder.Services.AddDbContext<ToDoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ToDoContext")));
+            builder.Services.AddScoped<ICategoryRepository, CategoryStaticRepository>();
             builder.Services.AddScoped<ITodoRepository, TodoStaticRepository>();
             builder.Services.AddScoped<ITodoService, TodoService>();
 
