@@ -115,7 +115,7 @@ namespace Todolist.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> MarkComplete([FromRoute] string id, ToDo selected)
+        public async Task<IActionResult> MarkCompleteAsynch([FromRoute] string id, ToDo selected)
         {
             var markedAsDone = await _todoService.MarkAsDone(int.Parse(id));
             
