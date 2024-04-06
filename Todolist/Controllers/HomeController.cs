@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using Todo.Service;
 using Todolist.Models;
 using TodoList.Domain.Interface;
@@ -25,11 +26,11 @@ namespace Todolist.Controllers
         public IActionResult Index(string id)
         {
             var temp = _todoRepository.GetAll();
-            //var filters = new Filters(id);
-            //ViewBag.Filters = filters;
-            //ViewBag.Categories = context.Categories.ToList();
-            //ViewBag.Statuses = context.Statuses.ToList();
-            //ViewBag.DueFilters = Filters.DueFilterValues;
+            var filters = new Filters(id);
+            ViewBag.Filters = filters;
+            ViewBag.Categories = new List<Category>(); //context.Categories.ToList();
+            ViewBag.Statuses = new List<Status>();// context.Statuses.ToList();
+            ViewBag.DueFilters = Filters.DueFilterValues;
 
             //IQueryable<ToDo> query = context.ToDoS
             //    .Include(t => t.Category)
@@ -64,9 +65,9 @@ namespace Todolist.Controllers
             //}
             //var tasks = query.OrderBy(t => t.DueDate).ToList();
 
-            //return View(tasks);
+            return View(new List<ToDo>());
 
-            return View();
+            //return View();
         }
 
         [HttpGet]
@@ -115,7 +116,7 @@ namespace Todolist.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> MarkComplete([FromRoute] string id, ToDo selected)
+        public async Task<IActionResult> MarkCompleteAsync([FromRoute] string id, ToDo selected)
         {
             var markedAsDone = await _todoService.MarkAsDone(int.Parse(id));
             
